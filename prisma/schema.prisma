@@ -14,3 +14,10 @@ model User {
   password String @db.VarChar(128)
   is_active Boolean @default(true)
 }
+
+model Badges {
+  id String @id @default(uuid())
+  slug String @unique @db.VarChar(30)
+  name String @db.VarChar(50)
+  image String @db.VarChar(255)
+}

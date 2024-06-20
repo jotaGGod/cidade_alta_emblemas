@@ -1,9 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
 import { executeUserSeed } from "./user-seed";
+import { executeBadgeSeed } from './badge-seed';
+
+const prisma = new PrismaClient();
 
 async function main() {
   await executeUserSeed();
+  await executeBadgeSeed();
 }
 main()
   .then(async () => {
