@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  username String @unique @db.VarChar(50)
+  email String @unique @db.VarChar(50)
+  password String @db.VarChar(128)
+  is_active Boolean @default(true)
+  userBadges UserBadges[]
+}
+
+model Badges {
+  id String @id @default(uuid())
+  slug String @unique @db.VarChar(30)
+  name String @db.VarChar(50)
+  image String @db.VarChar(255)
+  userBadges UserBadges[]
+}
+
+model UserBadges {
+  id String @id @default(uuid())
+  users User @relation(fields: [users_id], references: [id])
+  badges Badges @relation(fields: [badges_id], references: [id])
+  users_id String
+  badges_id String
+  created_at DateTime @default(now())
+
+  @@map(name: "users_badges")
+}
